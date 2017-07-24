@@ -52,6 +52,6 @@ app.use((err, req, res, next) => {
 
 // listen on a port
 let port = 3001;
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log('The server is listening closely on port', port);
 });

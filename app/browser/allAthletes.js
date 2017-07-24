@@ -19,7 +19,7 @@ class AllAthletes extends React.Component {
     return (
       <div>
         <h2>All Athletes</h2>
-        <button><Link to={`/add`}>Add Athlete</Link> </button>
+        <button> <Link to={`/add`}>Add Athlete</Link> </button>
           <div className="table">
             <table id="table">
               <thead>

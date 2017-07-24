@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack -w & nodemon app.js"
+    "start": "webpack -w & nodemon app.js",
+    "build-branch": "bin/build-branch.sh",
+    "deploy-heroku": "bin/deploy-heroku.sh"
   },
   "author": "Edward Goo",
   "license": "ISC",
@@ -15,6 +17,7 @@
     "express": "^4.15.3",
     "materialize-css": "^0.100.0",
     "morgan": "^1.8.2",
+    "nodemon": "^1.11.0",
     "pg": "^6.4.0",
     "pg-hstore": "^2.3.2",
     "react": "^15.6.1",

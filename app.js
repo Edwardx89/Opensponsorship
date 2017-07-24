@@ -1,8 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+const {resolve} = require('path');
 const bodyParser = require('body-parser');
 const app = express();
+const webpack = require('webpack');
+const config = require('./webpack.config');
 
 app.set('view engine', 'html');
 //Logging Middleware
@@ -10,6 +13,14 @@ app.use(morgan('dev'));
 
 //creating a static path for public folder
 app.use(express.static(path.join(__dirname, './public')));
+
+var compiler = webpack(config);
+
+app.use(require('webpack-dev-middleware')(compiler, {
+  publicPath: config.output.publicPath
+}));
+
+app.use(require('webpack-hot-middleware')(compiler));
 
 //parsing middleware so that you can use req.body
 app.use(bodyParser.json());
@@ -21,6 +32,7 @@ app.use('/api', require('./server'))
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, './public/index.html'))
 })
+
 
 // failed to catch req above means 404, forward to error handler
 app.use( (req, res, next) => {

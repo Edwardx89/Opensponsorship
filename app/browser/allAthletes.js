@@ -14,7 +14,6 @@ class AllAthletes extends React.Component {
 
 
   render() {
-    console.log('props', this.props)
     return (
       <div>
         <h2>All Athletes</h2>

@@ -15,7 +15,6 @@ class Athletes extends React.Component {
   }
 
   onSignupSubmit(evt) {
-    console.log('event', evt.target)
     const sportData = document.getElementById('sport').selectedIndex;
     const teamData = document.getElementById('team').selectedIndex;
     evt.preventDefault()
@@ -38,8 +37,6 @@ class Athletes extends React.Component {
     this.props.onSignupSubmit(athlete);
   }
   render() {
-    console.log('state', this.state)
-    console.log('props', this.props)
 
     return (
       <div>

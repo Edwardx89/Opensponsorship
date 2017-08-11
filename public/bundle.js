@@ -391,45 +391,43 @@ var emptyFunction = __webpack_require__(12);
 var warning = emptyFunction;
 
 if (process.env.NODE_ENV !== 'production') {
-  (function () {
-    var printWarning = function printWarning(format) {
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
+  var printWarning = function printWarning(format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  warning = function warning(condition, format) {
+    if (format === undefined) {
+      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+
+    if (format.indexOf('Failed Composite propType: ') === 0) {
+      return; // Ignore CompositeComponent proptype check.
+    }
+
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
       }
 
-      var argIndex = 0;
-      var message = 'Warning: ' + format.replace(/%s/g, function () {
-        return args[argIndex++];
-      });
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        // --- Welcome to debugging React ---
-        // This error was thrown as a convenience so that you can use this stack
-        // to find the callsite that caused this warning to fire.
-        throw new Error(message);
-      } catch (x) {}
-    };
-
-    warning = function warning(condition, format) {
-      if (format === undefined) {
-        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-      }
-
-      if (format.indexOf('Failed Composite propType: ') === 0) {
-        return; // Ignore CompositeComponent proptype check.
-      }
-
-      if (!condition) {
-        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-          args[_key2 - 2] = arguments[_key2];
-        }
-
-        printWarning.apply(undefined, [format].concat(args));
-      }
-    };
-  })();
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
 }
 
 module.exports = warning;
@@ -4210,7 +4208,7 @@ function formatPattern(pattern, params) {
     if (token === '*' || token === '**') {
       paramValue = Array.isArray(params.splat) ? params.splat[splatIndex++] : params.splat;
 
-      !(paramValue != null || parenCount > 0) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false, 'Missing splat #%s for path "%s"', splatIndex, pattern) : __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false) : void 0;
+      !(paramValue != null || parenCount > 0) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false, 'Missing splat #%s for path "%s"', splatIndex, pattern) : __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false) : void 0;
 
       if (paramValue != null) pathname += encodeURI(paramValue);
     } else if (token === '(') {
@@ -4229,7 +4227,7 @@ function formatPattern(pattern, params) {
       paramName = token.substring(1);
       paramValue = params[paramName];
 
-      !(paramValue != null || parenCount > 0) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false, 'Missing "%s" parameter for path "%s"', paramName, pattern) : __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false) : void 0;
+      !(paramValue != null || parenCount > 0) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false, 'Missing "%s" parameter for path "%s"', paramName, pattern) : __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false) : void 0;
 
       if (paramValue == null) {
         if (parenCount) {
@@ -4246,7 +4244,7 @@ function formatPattern(pattern, params) {
             }
           }
 
-          !(nextParenIdx > 0) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false, 'Path "%s" is missing end paren at segment "%s"', pattern, tokensSubset.join('')) : __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false) : void 0;
+          !(nextParenIdx > 0) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false, 'Path "%s" is missing end paren at segment "%s"', pattern, tokensSubset.join('')) : __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false) : void 0;
 
           // jump to ending paren
           i = curTokenIdx + nextParenIdx - 1;
@@ -4257,7 +4255,7 @@ function formatPattern(pattern, params) {
     }
   }
 
-  !(parenCount <= 0) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false, 'Path "%s" is missing end paren', pattern) : __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false) : void 0;
+  !(parenCount <= 0) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false, 'Path "%s" is missing end paren', pattern) : __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false) : void 0;
 
   return pathname.replace(/\/+/g, '/');
 }
@@ -5141,7 +5139,7 @@ function falsy(props, propName, componentName) {
   if (props[propName]) return new Error('<' + componentName + '> should not have a "' + propName + '" prop');
 }
 
-var history = __WEBPACK_IMPORTED_MODULE_0_prop_types__["shape"]({
+var history = Object(__WEBPACK_IMPORTED_MODULE_0_prop_types__["shape"])({
   listen: __WEBPACK_IMPORTED_MODULE_0_prop_types__["func"].isRequired,
   push: __WEBPACK_IMPORTED_MODULE_0_prop_types__["func"].isRequired,
   replace: __WEBPACK_IMPORTED_MODULE_0_prop_types__["func"].isRequired,
@@ -5150,10 +5148,10 @@ var history = __WEBPACK_IMPORTED_MODULE_0_prop_types__["shape"]({
   goForward: __WEBPACK_IMPORTED_MODULE_0_prop_types__["func"].isRequired
 });
 
-var component = __WEBPACK_IMPORTED_MODULE_0_prop_types__["oneOfType"]([__WEBPACK_IMPORTED_MODULE_0_prop_types__["func"], __WEBPACK_IMPORTED_MODULE_0_prop_types__["string"]]);
-var components = __WEBPACK_IMPORTED_MODULE_0_prop_types__["oneOfType"]([component, __WEBPACK_IMPORTED_MODULE_0_prop_types__["object"]]);
-var route = __WEBPACK_IMPORTED_MODULE_0_prop_types__["oneOfType"]([__WEBPACK_IMPORTED_MODULE_0_prop_types__["object"], __WEBPACK_IMPORTED_MODULE_0_prop_types__["element"]]);
-var routes = __WEBPACK_IMPORTED_MODULE_0_prop_types__["oneOfType"]([route, __WEBPACK_IMPORTED_MODULE_0_prop_types__["arrayOf"](route)]);
+var component = Object(__WEBPACK_IMPORTED_MODULE_0_prop_types__["oneOfType"])([__WEBPACK_IMPORTED_MODULE_0_prop_types__["func"], __WEBPACK_IMPORTED_MODULE_0_prop_types__["string"]]);
+var components = Object(__WEBPACK_IMPORTED_MODULE_0_prop_types__["oneOfType"])([component, __WEBPACK_IMPORTED_MODULE_0_prop_types__["object"]]);
+var route = Object(__WEBPACK_IMPORTED_MODULE_0_prop_types__["oneOfType"])([__WEBPACK_IMPORTED_MODULE_0_prop_types__["object"], __WEBPACK_IMPORTED_MODULE_0_prop_types__["element"]]);
+var routes = Object(__WEBPACK_IMPORTED_MODULE_0_prop_types__["oneOfType"])([route, Object(__WEBPACK_IMPORTED_MODULE_0_prop_types__["arrayOf"])(route)]);
 
 /***/ }),
 /* 44 */
@@ -8474,10 +8472,10 @@ var objectCtorString = funcToString.call(Object);
  * // => true
  */
 function isPlainObject(value) {
-  if (!__WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__["a" /* default */](value) || __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__["a" /* default */](value) != objectTag) {
+  if (!Object(__WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__["a" /* default */])(value) || Object(__WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__["a" /* default */])(value) != objectTag) {
     return false;
   }
-  var proto = __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__["a" /* default */](value);
+  var proto = Object(__WEBPACK_IMPORTED_MODULE_1__getPrototype_js__["a" /* default */])(value);
   if (proto === null) {
     return true;
   }
@@ -8740,10 +8738,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * A <RouterContext> renders the component tree for a given router state
  * and sets the history object and the current location in context.
  */
-var RouterContext = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
+var RouterContext = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default()({
   displayName: 'RouterContext',
 
-  mixins: [__WEBPACK_IMPORTED_MODULE_5__ContextUtils__["a" /* ContextProvider */]('router')],
+  mixins: [Object(__WEBPACK_IMPORTED_MODULE_5__ContextUtils__["a" /* ContextProvider */])('router')],
 
   propTypes: {
     router: __WEBPACK_IMPORTED_MODULE_3_prop_types__["object"].isRequired,
@@ -8790,7 +8788,7 @@ var RouterContext = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
         if (components == null) return element; // Don't create new children; use the grandchildren.
 
         var route = routes[index];
-        var routeParams = __WEBPACK_IMPORTED_MODULE_4__getRouteParams__["a" /* default */](route, params);
+        var routeParams = Object(__WEBPACK_IMPORTED_MODULE_4__getRouteParams__["a" /* default */])(route, params);
         var props = {
           location: location,
           params: params,
@@ -8800,7 +8798,7 @@ var RouterContext = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
           routes: routes
         };
 
-        if (__WEBPACK_IMPORTED_MODULE_6__RouteUtils__["c" /* isReactChildren */](element)) {
+        if (Object(__WEBPACK_IMPORTED_MODULE_6__RouteUtils__["c" /* isReactChildren */])(element)) {
           props.children = element;
         } else if (element) {
           for (var prop in element) {
@@ -8828,7 +8826,7 @@ var RouterContext = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
       }, element);
     }
 
-    !(element === null || element === false || __WEBPACK_IMPORTED_MODULE_1_react___default.a.isValidElement(element)) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false, 'The root route must render a single element') : __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false) : void 0;
+    !(element === null || element === false || __WEBPACK_IMPORTED_MODULE_1_react___default.a.isValidElement(element)) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false, 'The root route must render a single element') : __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false) : void 0;
 
     return element;
   }
@@ -8973,7 +8971,7 @@ function ContextSubscriber(name) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prop_types__);
 
 
-var routerShape = __WEBPACK_IMPORTED_MODULE_0_prop_types__["shape"]({
+var routerShape = Object(__WEBPACK_IMPORTED_MODULE_0_prop_types__["shape"])({
   push: __WEBPACK_IMPORTED_MODULE_0_prop_types__["func"].isRequired,
   replace: __WEBPACK_IMPORTED_MODULE_0_prop_types__["func"].isRequired,
   go: __WEBPACK_IMPORTED_MODULE_0_prop_types__["func"].isRequired,
@@ -8983,7 +8981,7 @@ var routerShape = __WEBPACK_IMPORTED_MODULE_0_prop_types__["shape"]({
   isActive: __WEBPACK_IMPORTED_MODULE_0_prop_types__["func"].isRequired
 });
 
-var locationShape = __WEBPACK_IMPORTED_MODULE_0_prop_types__["shape"]({
+var locationShape = Object(__WEBPACK_IMPORTED_MODULE_0_prop_types__["shape"])({
   pathname: __WEBPACK_IMPORTED_MODULE_0_prop_types__["string"].isRequired,
   search: __WEBPACK_IMPORTED_MODULE_0_prop_types__["string"].isRequired,
   state: __WEBPACK_IMPORTED_MODULE_0_prop_types__["object"],
@@ -13486,18 +13484,11 @@ module.exports = traverseAllChildren;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @typechecks
  */
@@ -14439,7 +14430,7 @@ selectorFactory) {
   var childContextTypes = (_childContextTypes = {}, _childContextTypes[subscriptionKey] = __WEBPACK_IMPORTED_MODULE_4__utils_PropTypes__["b" /* subscriptionShape */], _childContextTypes);
 
   return function wrapWithConnect(WrappedComponent) {
-    __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(typeof WrappedComponent == 'function', 'You must pass a component to the function returned by ' + ('connect. Instead received ' + JSON.stringify(WrappedComponent)));
+    __WEBPACK_IMPORTED_MODULE_1_invariant___default()(typeof WrappedComponent == 'function', 'You must pass a component to the function returned by ' + ('connect. Instead received ' + JSON.stringify(WrappedComponent)));
 
     var wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -14472,7 +14463,7 @@ selectorFactory) {
         _this.propsMode = Boolean(props[storeKey]);
         _this.setWrappedInstance = _this.setWrappedInstance.bind(_this);
 
-        __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(_this.store, 'Could not find "' + storeKey + '" in either the context or props of ' + ('"' + displayName + '". Either wrap the root component in a <Provider>, ') + ('or explicitly pass "' + storeKey + '" as a prop to "' + displayName + '".'));
+        __WEBPACK_IMPORTED_MODULE_1_invariant___default()(_this.store, 'Could not find "' + storeKey + '" in either the context or props of ' + ('"' + displayName + '". Either wrap the root component in a <Provider>, ') + ('or explicitly pass "' + storeKey + '" as a prop to "' + displayName + '".'));
 
         _this.initSelector();
         _this.initSubscription();
@@ -14522,7 +14513,7 @@ selectorFactory) {
       };
 
       Connect.prototype.getWrappedInstance = function getWrappedInstance() {
-        __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(withRef, 'To access the wrapped instance, you need to specify ' + ('{ withRef: true } in the options argument of the ' + methodName + '() call.'));
+        __WEBPACK_IMPORTED_MODULE_1_invariant___default()(withRef, 'To access the wrapped instance, you need to specify ' + ('{ withRef: true } in the options argument of the ' + methodName + '() call.'));
         return this.wrappedInstance;
       };
 
@@ -14598,7 +14589,7 @@ selectorFactory) {
         if (selector.error) {
           throw selector.error;
         } else {
-          return __WEBPACK_IMPORTED_MODULE_2_react__["createElement"](WrappedComponent, this.addExtraProps(selector.props));
+          return Object(__WEBPACK_IMPORTED_MODULE_2_react__["createElement"])(WrappedComponent, this.addExtraProps(selector.props));
         }
       };
 
@@ -14625,7 +14616,7 @@ selectorFactory) {
       };
     }
 
-    return __WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics___default.a(Connect, WrappedComponent);
+    return __WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics___default()(Connect, WrappedComponent);
   };
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
@@ -14718,7 +14709,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 function isCrushed() {}
 
 if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
-  __WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */]('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
+  Object(__WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
 }
 
 
@@ -14884,7 +14875,7 @@ var ActionTypes = {
    * return something else (for example, a Promise you can await).
    */
   function dispatch(action) {
-    if (!__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */](action)) {
+    if (!Object(__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */])(action)) {
       throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
     }
 
@@ -15132,7 +15123,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
         props = proxy(stateOrDispatch, ownProps);
       }
 
-      if (process.env.NODE_ENV !== 'production') __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */](props, displayName, methodName);
+      if (process.env.NODE_ENV !== 'production') Object(__WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */])(props, displayName, methodName);
 
       return props;
     };
@@ -15154,8 +15145,8 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
 
 
 function verifyPlainObject(value, displayName, methodName) {
-  if (!__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */](value)) {
-    __WEBPACK_IMPORTED_MODULE_1__warning__["a" /* default */](methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
+  if (!Object(__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */])(value)) {
+    Object(__WEBPACK_IMPORTED_MODULE_1__warning__["a" /* default */])(methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
   }
 }
 
@@ -15458,7 +15449,7 @@ function hasAnyProperties(object) {
 function createTransitionManager(history, routes) {
   var state = {};
 
-  var _getTransitionUtils = __WEBPACK_IMPORTED_MODULE_2__TransitionUtils__["a" /* default */](),
+  var _getTransitionUtils = Object(__WEBPACK_IMPORTED_MODULE_2__TransitionUtils__["a" /* default */])(),
       runEnterHooks = _getTransitionUtils.runEnterHooks,
       runChangeHooks = _getTransitionUtils.runChangeHooks,
       runLeaveHooks = _getTransitionUtils.runLeaveHooks;
@@ -15470,7 +15461,7 @@ function createTransitionManager(history, routes) {
   function isActive(location, indexOnly) {
     location = history.createLocation(location);
 
-    return __WEBPACK_IMPORTED_MODULE_3__isActive__["a" /* default */](location, indexOnly, state.location, state.routes, state.params);
+    return Object(__WEBPACK_IMPORTED_MODULE_3__isActive__["a" /* default */])(location, indexOnly, state.location, state.routes, state.params);
   }
 
   var partialNextState = void 0;
@@ -15480,7 +15471,7 @@ function createTransitionManager(history, routes) {
       // Continue from where we left off.
       finishMatch(partialNextState, callback);
     } else {
-      __WEBPACK_IMPORTED_MODULE_5__matchRoutes__["a" /* default */](routes, location, function (error, nextState) {
+      Object(__WEBPACK_IMPORTED_MODULE_5__matchRoutes__["a" /* default */])(routes, location, function (error, nextState) {
         if (error) {
           callback(error);
         } else if (nextState) {
@@ -15493,7 +15484,7 @@ function createTransitionManager(history, routes) {
   }
 
   function finishMatch(nextState, callback) {
-    var _computeChangedRoutes = __WEBPACK_IMPORTED_MODULE_1__computeChangedRoutes__["a" /* default */](state, nextState),
+    var _computeChangedRoutes = Object(__WEBPACK_IMPORTED_MODULE_1__computeChangedRoutes__["a" /* default */])(state, nextState),
         leaveRoutes = _computeChangedRoutes.leaveRoutes,
         changeRoutes = _computeChangedRoutes.changeRoutes,
         enterRoutes = _computeChangedRoutes.enterRoutes;
@@ -15516,7 +15507,7 @@ function createTransitionManager(history, routes) {
       if (error || redirectInfo) return handleErrorOrRedirect(error, redirectInfo);
 
       // TODO: Fetch components after state is updated.
-      __WEBPACK_IMPORTED_MODULE_4__getComponents__["a" /* default */](nextState, function (error, components) {
+      Object(__WEBPACK_IMPORTED_MODULE_4__getComponents__["a" /* default */])(nextState, function (error, components) {
         if (error) {
           callback(error);
         } else {
@@ -15551,7 +15542,7 @@ function createTransitionManager(history, routes) {
   }
 
   function transitionHook(location, callback) {
-    __WEBPACK_IMPORTED_MODULE_5__matchRoutes__["a" /* default */](routes, location, function (error, nextState) {
+    Object(__WEBPACK_IMPORTED_MODULE_5__matchRoutes__["a" /* default */])(routes, location, function (error, nextState) {
       if (nextState == null) {
         // TODO: We didn't actually match anything, but hang
         // onto error/nextState so we don't have to matchRoutes
@@ -15564,7 +15555,7 @@ function createTransitionManager(history, routes) {
       // matchRoutes() again in the listen callback.
       partialNextState = _extends({}, nextState, { location: location });
 
-      var hooks = getRouteHooksForRoutes(__WEBPACK_IMPORTED_MODULE_1__computeChangedRoutes__["a" /* default */](state, partialNextState).leaveRoutes);
+      var hooks = getRouteHooksForRoutes(Object(__WEBPACK_IMPORTED_MODULE_1__computeChangedRoutes__["a" /* default */])(state, partialNextState).leaveRoutes);
 
       var result = void 0;
       for (var i = 0, len = hooks.length; result == null && i < len; ++i) {
@@ -15669,7 +15660,7 @@ function createTransitionManager(history, routes) {
           } else if (nextState) {
             listener(null, nextState);
           } else {
-            process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0__routerWarning__["a" /* default */](false, 'Location "%s" did not match any routes', location.pathname + location.search + location.hash) : void 0;
+            process.env.NODE_ENV !== 'production' ? Object(__WEBPACK_IMPORTED_MODULE_0__routerWarning__["a" /* default */])(false, 'Location "%s" did not match any routes', location.pathname + location.search + location.hash) : void 0;
           }
         });
       }
@@ -15798,17 +15789,17 @@ function resolveToLocation(to, router) {
  *
  *   <Link to={`/posts/${post.id}`} />
  */
-var Link = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default.a({
+var Link = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default()({
   displayName: 'Link',
 
-  mixins: [__WEBPACK_IMPORTED_MODULE_5__ContextUtils__["b" /* ContextSubscriber */]('router')],
+  mixins: [Object(__WEBPACK_IMPORTED_MODULE_5__ContextUtils__["b" /* ContextSubscriber */])('router')],
 
   contextTypes: {
     router: __WEBPACK_IMPORTED_MODULE_4__PropTypes__["b" /* routerShape */]
   },
 
   propTypes: {
-    to: __WEBPACK_IMPORTED_MODULE_2_prop_types__["oneOfType"]([__WEBPACK_IMPORTED_MODULE_2_prop_types__["string"], __WEBPACK_IMPORTED_MODULE_2_prop_types__["object"], __WEBPACK_IMPORTED_MODULE_2_prop_types__["func"]]),
+    to: Object(__WEBPACK_IMPORTED_MODULE_2_prop_types__["oneOfType"])([__WEBPACK_IMPORTED_MODULE_2_prop_types__["string"], __WEBPACK_IMPORTED_MODULE_2_prop_types__["object"], __WEBPACK_IMPORTED_MODULE_2_prop_types__["func"]]),
     activeStyle: __WEBPACK_IMPORTED_MODULE_2_prop_types__["object"],
     activeClassName: __WEBPACK_IMPORTED_MODULE_2_prop_types__["string"],
     onlyActiveOnIndex: __WEBPACK_IMPORTED_MODULE_2_prop_types__["bool"].isRequired,
@@ -15829,7 +15820,7 @@ var Link = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default.a({
 
     var router = this.context.router;
 
-    !router ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_3_invariant___default.a(false, '<Link>s rendered outside of a router context cannot navigate.') : __WEBPACK_IMPORTED_MODULE_3_invariant___default.a(false) : void 0;
+    !router ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_3_invariant___default()(false, '<Link>s rendered outside of a router context cannot navigate.') : __WEBPACK_IMPORTED_MODULE_3_invariant___default()(false) : void 0;
 
     if (isModifiedEvent(event) || !isLeftClickEvent(event)) return;
 
@@ -15915,12 +15906,12 @@ var Link = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default.a({
  * and are traversed in the same manner.
  */
 /* eslint-disable react/require-render-return */
-var Redirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
+var Redirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
   displayName: 'Redirect',
 
   statics: {
     createRouteFromReactElement: function createRouteFromReactElement(element) {
-      var route = __WEBPACK_IMPORTED_MODULE_3__RouteUtils__["a" /* createRouteFromReactElement */](element);
+      var route = Object(__WEBPACK_IMPORTED_MODULE_3__RouteUtils__["a" /* createRouteFromReactElement */])(element);
 
       if (route.from) route.path = route.from;
 
@@ -15931,14 +15922,14 @@ var Redirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
 
         var pathname = void 0;
         if (route.to.charAt(0) === '/') {
-          pathname = __WEBPACK_IMPORTED_MODULE_4__PatternUtils__["a" /* formatPattern */](route.to, params);
+          pathname = Object(__WEBPACK_IMPORTED_MODULE_4__PatternUtils__["a" /* formatPattern */])(route.to, params);
         } else if (!route.to) {
           pathname = location.pathname;
         } else {
           var routeIndex = nextState.routes.indexOf(route);
           var parentPattern = Redirect.getRoutePattern(nextState.routes, routeIndex - 1);
           var pattern = parentPattern.replace(/\/*$/, '/') + route.to;
-          pathname = __WEBPACK_IMPORTED_MODULE_4__PatternUtils__["a" /* formatPattern */](pattern, params);
+          pathname = Object(__WEBPACK_IMPORTED_MODULE_4__PatternUtils__["a" /* formatPattern */])(pattern, params);
         }
 
         replace({
@@ -15978,7 +15969,7 @@ var Redirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
 
   /* istanbul ignore next: sanity check */
   render: function render() {
-     true ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_2_invariant___default.a(false, '<Redirect> elements are for router configuration only and should not be rendered') : __WEBPACK_IMPORTED_MODULE_2_invariant___default.a(false) : void 0;
+     true ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_2_invariant___default()(false, '<Redirect> elements are for router configuration only and should not be rendered') : __WEBPACK_IMPORTED_MODULE_2_invariant___default()(false) : void 0;
   }
 });
 
@@ -16005,11 +15996,11 @@ function createMemoryHistory(options) {
   // signatures and type checking differ between `useQueries` and
   // `createMemoryHistory`, have to create `memoryHistory` first because
   // `useQueries` doesn't understand the signature
-  var memoryHistory = __WEBPACK_IMPORTED_MODULE_2_history_lib_createMemoryHistory___default.a(options);
+  var memoryHistory = __WEBPACK_IMPORTED_MODULE_2_history_lib_createMemoryHistory___default()(options);
   var createHistory = function createHistory() {
     return memoryHistory;
   };
-  var history = __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries___default.a(__WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename___default.a(createHistory))(options);
+  var history = __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries___default()(__WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename___default()(createHistory))(options);
   return history;
 }
 
@@ -16270,7 +16261,7 @@ exports.default = useBasename;
 
 function useRouterHistory(createHistory) {
   return function (options) {
-    var history = __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries___default.a(__WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename___default.a(createHistory))(options);
+    var history = __WEBPACK_IMPORTED_MODULE_0_history_lib_useQueries___default()(__WEBPACK_IMPORTED_MODULE_1_history_lib_useBasename___default()(createHistory))(options);
     return history;
   };
 }
@@ -16380,7 +16371,7 @@ var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.do
 
 function createRouterHistory(createHistory) {
   var history = void 0;
-  if (canUseDOM) history = __WEBPACK_IMPORTED_MODULE_0__useRouterHistory__["a" /* default */](createHistory)();
+  if (canUseDOM) history = Object(__WEBPACK_IMPORTED_MODULE_0__useRouterHistory__["a" /* default */])(createHistory)();
   return history;
 }
 
@@ -28054,7 +28045,7 @@ function warnAboutReceivingStore() {
   }
   didWarnAboutReceivingStore = true;
 
-  __WEBPACK_IMPORTED_MODULE_3__utils_warning__["a" /* default */]('<Provider> does not support changing `store` on the fly. ' + 'It is most likely that you see this error because you updated to ' + 'Redux 2.x and React Redux 2.x which no longer hot reload reducers ' + 'automatically. See https://github.com/reactjs/react-redux/releases/' + 'tag/v2.0.0 for the migration instructions.');
+  Object(__WEBPACK_IMPORTED_MODULE_3__utils_warning__["a" /* default */])('<Provider> does not support changing `store` on the fly. ' + 'It is most likely that you see this error because you updated to ' + 'Redux 2.x and React Redux 2.x which no longer hot reload reducers ' + 'automatically. See https://github.com/reactjs/react-redux/releases/' + 'tag/v2.0.0 for the migration instructions.');
 }
 
 function createProvider() {
@@ -28440,18 +28431,18 @@ function shallowEqual(objA, objB) {
 
 
 function whenMapDispatchToPropsIsFunction(mapDispatchToProps) {
-  return typeof mapDispatchToProps === 'function' ? __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["b" /* wrapMapToPropsFunc */](mapDispatchToProps, 'mapDispatchToProps') : undefined;
+  return typeof mapDispatchToProps === 'function' ? Object(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["b" /* wrapMapToPropsFunc */])(mapDispatchToProps, 'mapDispatchToProps') : undefined;
 }
 
 function whenMapDispatchToPropsIsMissing(mapDispatchToProps) {
-  return !mapDispatchToProps ? __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */](function (dispatch) {
+  return !mapDispatchToProps ? Object(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */])(function (dispatch) {
     return { dispatch: dispatch };
   }) : undefined;
 }
 
 function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
-  return mapDispatchToProps && typeof mapDispatchToProps === 'object' ? __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */](function (dispatch) {
-    return __WEBPACK_IMPORTED_MODULE_0_redux__["bindActionCreators"](mapDispatchToProps, dispatch);
+  return mapDispatchToProps && typeof mapDispatchToProps === 'object' ? Object(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */])(function (dispatch) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0_redux__["bindActionCreators"])(mapDispatchToProps, dispatch);
   }) : undefined;
 }
 
@@ -28488,8 +28479,8 @@ function baseGetTag(value) {
     return value === undefined ? undefinedTag : nullTag;
   }
   return (symToStringTag && symToStringTag in Object(value))
-    ? __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__["a" /* default */](value)
-    : __WEBPACK_IMPORTED_MODULE_2__objectToString_js__["a" /* default */](value);
+    ? Object(__WEBPACK_IMPORTED_MODULE_1__getRawTag_js__["a" /* default */])(value)
+    : Object(__WEBPACK_IMPORTED_MODULE_2__objectToString_js__["a" /* default */])(value);
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (baseGetTag);
@@ -28616,7 +28607,7 @@ function objectToString(value) {
 
 
 /** Built-in value references. */
-var getPrototype = __WEBPACK_IMPORTED_MODULE_0__overArg_js__["a" /* default */](Object.getPrototypeOf, Object);
+var getPrototype = Object(__WEBPACK_IMPORTED_MODULE_0__overArg_js__["a" /* default */])(Object.getPrototypeOf, Object);
 
 /* harmony default export */ __webpack_exports__["a"] = (getPrototype);
 
@@ -28807,7 +28798,7 @@ function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, une
     return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
   }
 
-  if (!__WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__["a" /* default */](inputState)) {
+  if (!Object(__WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__["a" /* default */])(inputState)) {
     return 'The ' + argumentName + ' has unexpected type of "' + {}.toString.call(inputState).match(/\s([a-z|A-Z]+)/)[1] + '". Expected argument to be an object with the following ' + ('keys: "' + reducerKeys.join('", "') + '"');
   }
 
@@ -28864,7 +28855,7 @@ function combineReducers(reducers) {
 
     if (process.env.NODE_ENV !== 'production') {
       if (typeof reducers[key] === 'undefined') {
-        __WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */]('No reducer provided for key "' + key + '"');
+        Object(__WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */])('No reducer provided for key "' + key + '"');
       }
     }
 
@@ -28897,7 +28888,7 @@ function combineReducers(reducers) {
     if (process.env.NODE_ENV !== 'production') {
       var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
       if (warningMessage) {
-        __WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */](warningMessage);
+        Object(__WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */])(warningMessage);
       }
     }
 
@@ -29041,11 +29032,11 @@ function applyMiddleware() {
 
 
 function whenMapStateToPropsIsFunction(mapStateToProps) {
-  return typeof mapStateToProps === 'function' ? __WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["b" /* wrapMapToPropsFunc */](mapStateToProps, 'mapStateToProps') : undefined;
+  return typeof mapStateToProps === 'function' ? Object(__WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["b" /* wrapMapToPropsFunc */])(mapStateToProps, 'mapStateToProps') : undefined;
 }
 
 function whenMapStateToPropsIsMissing(mapStateToProps) {
-  return !mapStateToProps ? __WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["a" /* wrapMapToPropsConstant */](function () {
+  return !mapStateToProps ? Object(__WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["a" /* wrapMapToPropsConstant */])(function () {
     return {};
   }) : undefined;
 }
@@ -29088,7 +29079,7 @@ function wrapMergePropsFunc(mergeProps) {
         hasRunOnce = true;
         mergedProps = nextMergedProps;
 
-        if (process.env.NODE_ENV !== 'production') __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */](mergedProps, displayName, 'mergeProps');
+        if (process.env.NODE_ENV !== 'production') Object(__WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */])(mergedProps, displayName, 'mergeProps');
       }
 
       return mergedProps;
@@ -29213,7 +29204,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
   var mergeProps = initMergeProps(dispatch, options);
 
   if (process.env.NODE_ENV !== 'production') {
-    __WEBPACK_IMPORTED_MODULE_0__verifySubselectors__["a" /* default */](mapStateToProps, mapDispatchToProps, mergeProps, options.displayName);
+    Object(__WEBPACK_IMPORTED_MODULE_0__verifySubselectors__["a" /* default */])(mapStateToProps, mapDispatchToProps, mergeProps, options.displayName);
   }
 
   var selectorFactory = options.pure ? pureFinalPropsSelectorFactory : impureFinalPropsSelectorFactory;
@@ -29236,7 +29227,7 @@ function verify(selector, methodName, displayName) {
     throw new Error('Unexpected value for ' + methodName + ' in ' + displayName + '.');
   } else if (methodName === 'mapStateToProps' || methodName === 'mapDispatchToProps') {
     if (!selector.hasOwnProperty('dependsOnOwnProps')) {
-      __WEBPACK_IMPORTED_MODULE_0__utils_warning__["a" /* default */]('The selector for ' + methodName + ' of ' + displayName + ' did not specify a value for dependsOnOwnProps.');
+      Object(__WEBPACK_IMPORTED_MODULE_0__utils_warning__["a" /* default */])('The selector for ' + methodName + ' of ' + displayName + ' did not specify a value for dependsOnOwnProps.');
     }
   }
 }
@@ -30240,7 +30231,7 @@ var propTypes = {
  * a router that renders a <RouterContext> with all the props
  * it needs each time the URL changes.
  */
-var Router = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
+var Router = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default()({
   displayName: 'Router',
 
   propTypes: propTypes,
@@ -30277,7 +30268,7 @@ var Router = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
 
     var history = this.props.history;
 
-    return __WEBPACK_IMPORTED_MODULE_8__RouterUtils__["b" /* createRouterObject */](history, this.transitionManager, state);
+    return Object(__WEBPACK_IMPORTED_MODULE_8__RouterUtils__["b" /* createRouterObject */])(history, this.transitionManager, state);
   },
   createTransitionManager: function createTransitionManager() {
     var matchContext = this.props.matchContext;
@@ -30292,9 +30283,9 @@ var Router = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
         children = _props.children;
 
 
-    !history.getCurrentLocation ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false, 'You have provided a history object created with history v4.x or v2.x ' + 'and earlier. This version of React Router is only compatible with v3 ' + 'history objects. Please change to history v3.x.') : __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false) : void 0;
+    !history.getCurrentLocation ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false, 'You have provided a history object created with history v4.x or v2.x ' + 'and earlier. This version of React Router is only compatible with v3 ' + 'history objects. Please change to history v3.x.') : __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false) : void 0;
 
-    return __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__["a" /* default */](history, __WEBPACK_IMPORTED_MODULE_7__RouteUtils__["b" /* createRoutes */](routes || children));
+    return Object(__WEBPACK_IMPORTED_MODULE_4__createTransitionManager__["a" /* default */])(history, Object(__WEBPACK_IMPORTED_MODULE_7__RouteUtils__["b" /* createRoutes */])(routes || children));
   },
   componentWillMount: function componentWillMount() {
     var _this = this;
@@ -30308,7 +30299,7 @@ var Router = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
       } else {
         // Keep the identity of this.router because of a caveat in ContextUtils:
         // they only work if the object identity is preserved.
-        __WEBPACK_IMPORTED_MODULE_8__RouterUtils__["a" /* assignRouterState */](_this.router, state);
+        Object(__WEBPACK_IMPORTED_MODULE_8__RouterUtils__["a" /* assignRouterState */])(_this.router, state);
         _this.setState(state, _this.props.onUpdate);
       }
     });
@@ -30317,9 +30308,9 @@ var Router = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
 
   /* istanbul ignore next: sanity check */
   componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_9__routerWarning__["a" /* default */](nextProps.history === this.props.history, 'You cannot change <Router history>; it will be ignored') : void 0;
+    process.env.NODE_ENV !== 'production' ? Object(__WEBPACK_IMPORTED_MODULE_9__routerWarning__["a" /* default */])(nextProps.history === this.props.history, 'You cannot change <Router history>; it will be ignored') : void 0;
 
-    process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_9__routerWarning__["a" /* default */]((nextProps.routes || nextProps.children) === (this.props.routes || this.props.children), 'You cannot change <Router routes>; it will be ignored') : void 0;
+    process.env.NODE_ENV !== 'production' ? Object(__WEBPACK_IMPORTED_MODULE_9__routerWarning__["a" /* default */])((nextProps.routes || nextProps.children) === (this.props.routes || this.props.children), 'You cannot change <Router routes>; it will be ignored') : void 0;
   },
   componentWillUnmount: function componentWillUnmount() {
     if (this._unlisten) this._unlisten();
@@ -30369,7 +30360,7 @@ var Router = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
 function routeParamsChanged(route, prevState, nextState) {
   if (!route.path) return false;
 
-  var paramNames = __WEBPACK_IMPORTED_MODULE_0__PatternUtils__["b" /* getParamNames */](route.path);
+  var paramNames = Object(__WEBPACK_IMPORTED_MODULE_0__PatternUtils__["b" /* getParamNames */])(route.path);
 
   return paramNames.some(function (paramName) {
     return prevState.params[paramName] !== nextState.params[paramName];
@@ -30524,7 +30515,7 @@ function getTransitionUtils() {
       redirectInfo = location;
     }
 
-    __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__["a" /* loopAsync */](length, function (index, next, done) {
+    Object(__WEBPACK_IMPORTED_MODULE_0__AsyncUtils__["a" /* loopAsync */])(length, function (index, next, done) {
       iter(index, replace, function (error) {
         if (error || redirectInfo) {
           done(error, redirectInfo); // No need to continue.
@@ -30689,7 +30680,7 @@ function routeIsActive(pathname, routes, params) {
     }
 
     if (remainingPathname !== null && pattern) {
-      var matched = __WEBPACK_IMPORTED_MODULE_0__PatternUtils__["c" /* matchPattern */](pattern, remainingPathname);
+      var matched = Object(__WEBPACK_IMPORTED_MODULE_0__PatternUtils__["c" /* matchPattern */])(pattern, remainingPathname);
       if (matched) {
         remainingPathname = matched.remainingPathname;
         paramNames = [].concat(paramNames, matched.paramNames);
@@ -30771,7 +30762,7 @@ function getComponentsForRoute(nextState, route, callback) {
   var getComponent = route.getComponent || route.getComponents;
   if (getComponent) {
     var componentReturn = getComponent.call(route, nextState, callback);
-    if (__WEBPACK_IMPORTED_MODULE_1__PromiseUtils__["a" /* isPromise */](componentReturn)) componentReturn.then(function (component) {
+    if (Object(__WEBPACK_IMPORTED_MODULE_1__PromiseUtils__["a" /* isPromise */])(componentReturn)) componentReturn.then(function (component) {
       return callback(null, component);
     }, callback);
   } else {
@@ -30787,7 +30778,7 @@ function getComponentsForRoute(nextState, route, callback) {
  * asynchronous getComponents method.
  */
 function getComponents(nextState, callback) {
-  __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__["b" /* mapAsync */](nextState.routes, function (route, index, callback) {
+  Object(__WEBPACK_IMPORTED_MODULE_0__AsyncUtils__["b" /* mapAsync */])(nextState.routes, function (route, index, callback) {
     getComponentsForRoute(nextState, route, callback);
   }, callback);
 }
@@ -30830,7 +30821,7 @@ function getChildRoutes(route, location, paramNames, paramValues, callback) {
   };
 
   var childRoutesReturn = route.getChildRoutes(partialNextState, function (error, childRoutes) {
-    childRoutes = !error && __WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */](childRoutes);
+    childRoutes = !error && Object(__WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */])(childRoutes);
     if (sync) {
       result = [error, childRoutes];
       return;
@@ -30839,8 +30830,8 @@ function getChildRoutes(route, location, paramNames, paramValues, callback) {
     callback(error, childRoutes);
   });
 
-  if (__WEBPACK_IMPORTED_MODULE_1__PromiseUtils__["a" /* isPromise */](childRoutesReturn)) childRoutesReturn.then(function (childRoutes) {
-    return callback(null, __WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */](childRoutes));
+  if (Object(__WEBPACK_IMPORTED_MODULE_1__PromiseUtils__["a" /* isPromise */])(childRoutesReturn)) childRoutesReturn.then(function (childRoutes) {
+    return callback(null, Object(__WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */])(childRoutes));
   }, callback);
 
   sync = false;
@@ -30857,11 +30848,11 @@ function getIndexRoute(route, location, paramNames, paramValues, callback) {
     };
 
     var indexRoutesReturn = route.getIndexRoute(partialNextState, function (error, indexRoute) {
-      callback(error, !error && __WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */](indexRoute)[0]);
+      callback(error, !error && Object(__WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */])(indexRoute)[0]);
     });
 
-    if (__WEBPACK_IMPORTED_MODULE_1__PromiseUtils__["a" /* isPromise */](indexRoutesReturn)) indexRoutesReturn.then(function (indexRoute) {
-      return callback(null, __WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */](indexRoute)[0]);
+    if (Object(__WEBPACK_IMPORTED_MODULE_1__PromiseUtils__["a" /* isPromise */])(indexRoutesReturn)) indexRoutesReturn.then(function (indexRoute) {
+      return callback(null, Object(__WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */])(indexRoute)[0]);
     }, callback);
   } else if (route.childRoutes || route.getChildRoutes) {
     var onChildRoutes = function onChildRoutes(error, childRoutes) {
@@ -30874,7 +30865,7 @@ function getIndexRoute(route, location, paramNames, paramValues, callback) {
         return !childRoute.path;
       });
 
-      __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__["a" /* loopAsync */](pathless.length, function (index, next, done) {
+      Object(__WEBPACK_IMPORTED_MODULE_0__AsyncUtils__["a" /* loopAsync */])(pathless.length, function (index, next, done) {
         getIndexRoute(pathless[index], location, paramNames, paramValues, function (error, indexRoute) {
           if (error || indexRoute) {
             var routes = [pathless[index]].concat(Array.isArray(indexRoute) ? indexRoute : [indexRoute]);
@@ -30930,7 +30921,7 @@ function matchRouteDeep(route, location, remainingPathname, paramNames, paramVal
   // we're not just searching for potential nested absolute paths.
   if (remainingPathname !== null && pattern) {
     try {
-      var matched = __WEBPACK_IMPORTED_MODULE_2__PatternUtils__["c" /* matchPattern */](pattern, remainingPathname);
+      var matched = Object(__WEBPACK_IMPORTED_MODULE_2__PatternUtils__["c" /* matchPattern */])(pattern, remainingPathname);
       if (matched) {
         remainingPathname = matched.remainingPathname;
         paramNames = [].concat(paramNames, matched.paramNames);
@@ -30957,12 +30948,12 @@ function matchRouteDeep(route, location, remainingPathname, paramNames, paramVal
           if (Array.isArray(indexRoute)) {
             var _match$routes;
 
-            process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_3__routerWarning__["a" /* default */](indexRoute.every(function (route) {
+            process.env.NODE_ENV !== 'production' ? Object(__WEBPACK_IMPORTED_MODULE_3__routerWarning__["a" /* default */])(indexRoute.every(function (route) {
               return !route.path;
             }), 'Index routes should not have paths') : void 0;
             (_match$routes = match.routes).push.apply(_match$routes, indexRoute);
           } else if (indexRoute) {
-            process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_3__routerWarning__["a" /* default */](!indexRoute.path, 'Index routes should not have paths') : void 0;
+            process.env.NODE_ENV !== 'production' ? Object(__WEBPACK_IMPORTED_MODULE_3__routerWarning__["a" /* default */])(!indexRoute.path, 'Index routes should not have paths') : void 0;
             match.routes.push(indexRoute);
           }
 
@@ -31035,7 +31026,7 @@ function matchRoutes(routes, location, callback, remainingPathname) {
     remainingPathname = location.pathname;
   }
 
-  __WEBPACK_IMPORTED_MODULE_0__AsyncUtils__["a" /* loopAsync */](routes.length, function (index, next, done) {
+  Object(__WEBPACK_IMPORTED_MODULE_0__AsyncUtils__["a" /* loopAsync */])(routes.length, function (index, next, done) {
     matchRouteDeep(routes[index], location, remainingPathname, paramNames, paramValues, function (error, match) {
       if (error || match) {
         done(error, match);
@@ -31064,7 +31055,7 @@ function getRouteParams(route, params) {
 
   if (!route.path) return routeParams;
 
-  __WEBPACK_IMPORTED_MODULE_0__PatternUtils__["b" /* getParamNames */](route.path).forEach(function (p) {
+  Object(__WEBPACK_IMPORTED_MODULE_0__PatternUtils__["b" /* getParamNames */])(route.path).forEach(function (p) {
     if (Object.prototype.hasOwnProperty.call(params, p)) {
       routeParams[p] = params[p];
     }
@@ -31094,7 +31085,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /**
  * An <IndexLink> is used to link to an <IndexRoute>.
  */
-var IndexLink = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default.a({
+var IndexLink = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default()({
   displayName: 'IndexLink',
 
   render: function render() {
@@ -31136,16 +31127,16 @@ function getDisplayName(WrappedComponent) {
 function withRouter(WrappedComponent, options) {
   var withRef = options && options.withRef;
 
-  var WithRouter = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default.a({
+  var WithRouter = __WEBPACK_IMPORTED_MODULE_2_create_react_class___default()({
     displayName: 'WithRouter',
 
-    mixins: [__WEBPACK_IMPORTED_MODULE_4__ContextUtils__["b" /* ContextSubscriber */]('router')],
+    mixins: [Object(__WEBPACK_IMPORTED_MODULE_4__ContextUtils__["b" /* ContextSubscriber */])('router')],
 
     contextTypes: { router: __WEBPACK_IMPORTED_MODULE_5__PropTypes__["b" /* routerShape */] },
     propTypes: { router: __WEBPACK_IMPORTED_MODULE_5__PropTypes__["b" /* routerShape */] },
 
     getWrappedInstance: function getWrappedInstance() {
-      !withRef ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false, 'To access the wrapped instance, you need to specify ' + '`{ withRef: true }` as the second argument of the withRouter() call.') : __WEBPACK_IMPORTED_MODULE_0_invariant___default.a(false) : void 0;
+      !withRef ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false, 'To access the wrapped instance, you need to specify ' + '`{ withRef: true }` as the second argument of the withRouter() call.') : __WEBPACK_IMPORTED_MODULE_0_invariant___default()(false) : void 0;
 
       return this.wrappedInstance;
     },
@@ -31176,7 +31167,7 @@ function withRouter(WrappedComponent, options) {
   WithRouter.displayName = 'withRouter(' + getDisplayName(WrappedComponent) + ')';
   WithRouter.WrappedComponent = WrappedComponent;
 
-  return __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics___default.a(WithRouter, WrappedComponent);
+  return __WEBPACK_IMPORTED_MODULE_3_hoist_non_react_statics___default()(WithRouter, WrappedComponent);
 }
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
@@ -31205,7 +31196,7 @@ function withRouter(WrappedComponent, options) {
  * An <IndexRedirect> is used to redirect from an indexRoute.
  */
 /* eslint-disable react/require-render-return */
-var IndexRedirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
+var IndexRedirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
   displayName: 'IndexRedirect',
 
   statics: {
@@ -31214,7 +31205,7 @@ var IndexRedirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
       if (parentRoute) {
         parentRoute.indexRoute = __WEBPACK_IMPORTED_MODULE_4__Redirect__["a" /* default */].createRouteFromReactElement(element);
       } else {
-        process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_2__routerWarning__["a" /* default */](false, 'An <IndexRedirect> does not make sense at the root of your route config') : void 0;
+        process.env.NODE_ENV !== 'production' ? Object(__WEBPACK_IMPORTED_MODULE_2__routerWarning__["a" /* default */])(false, 'An <IndexRedirect> does not make sense at the root of your route config') : void 0;
       }
     }
   },
@@ -31229,7 +31220,7 @@ var IndexRedirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
 
   /* istanbul ignore next: sanity check */
   render: function render() {
-     true ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_3_invariant___default.a(false, '<IndexRedirect> elements are for router configuration only and should not be rendered') : __WEBPACK_IMPORTED_MODULE_3_invariant___default.a(false) : void 0;
+     true ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_3_invariant___default()(false, '<IndexRedirect> elements are for router configuration only and should not be rendered') : __WEBPACK_IMPORTED_MODULE_3_invariant___default()(false) : void 0;
   }
 });
 
@@ -31262,16 +31253,16 @@ var IndexRedirect = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
  * a JSX route config.
  */
 /* eslint-disable react/require-render-return */
-var IndexRoute = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
+var IndexRoute = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
   displayName: 'IndexRoute',
 
   statics: {
     createRouteFromReactElement: function createRouteFromReactElement(element, parentRoute) {
       /* istanbul ignore else: sanity check */
       if (parentRoute) {
-        parentRoute.indexRoute = __WEBPACK_IMPORTED_MODULE_4__RouteUtils__["a" /* createRouteFromReactElement */](element);
+        parentRoute.indexRoute = Object(__WEBPACK_IMPORTED_MODULE_4__RouteUtils__["a" /* createRouteFromReactElement */])(element);
       } else {
-        process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_2__routerWarning__["a" /* default */](false, 'An <IndexRoute> does not make sense at the root of your route config') : void 0;
+        process.env.NODE_ENV !== 'production' ? Object(__WEBPACK_IMPORTED_MODULE_2__routerWarning__["a" /* default */])(false, 'An <IndexRoute> does not make sense at the root of your route config') : void 0;
       }
     }
   },
@@ -31286,7 +31277,7 @@ var IndexRoute = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
 
   /* istanbul ignore next: sanity check */
   render: function render() {
-     true ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_3_invariant___default.a(false, '<IndexRoute> elements are for router configuration only and should not be rendered') : __WEBPACK_IMPORTED_MODULE_3_invariant___default.a(false) : void 0;
+     true ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_3_invariant___default()(false, '<IndexRoute> elements are for router configuration only and should not be rendered') : __WEBPACK_IMPORTED_MODULE_3_invariant___default()(false) : void 0;
   }
 });
 
@@ -31323,7 +31314,7 @@ var IndexRoute = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
  * rendered into the DOM, nested in the same order as in the tree.
  */
 /* eslint-disable react/require-render-return */
-var Route = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
+var Route = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default()({
   displayName: 'Route',
 
   statics: {
@@ -31340,7 +31331,7 @@ var Route = __WEBPACK_IMPORTED_MODULE_0_create_react_class___default.a({
 
   /* istanbul ignore next: sanity check */
   render: function render() {
-     true ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_2_invariant___default.a(false, '<Route> elements are for router configuration only and should not be rendered') : __WEBPACK_IMPORTED_MODULE_2_invariant___default.a(false) : void 0;
+     true ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_2_invariant___default()(false, '<Route> elements are for router configuration only and should not be rendered') : __WEBPACK_IMPORTED_MODULE_2_invariant___default()(false) : void 0;
   }
 });
 
@@ -31387,10 +31378,10 @@ function match(_ref, callback) {
       location = _ref.location,
       options = _objectWithoutProperties(_ref, ['history', 'routes', 'location']);
 
-  !(history || location) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(false, 'match needs a history or a location') : __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(false) : void 0;
+  !(history || location) ? process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_1_invariant___default()(false, 'match needs a history or a location') : __WEBPACK_IMPORTED_MODULE_1_invariant___default()(false) : void 0;
 
-  history = history ? history : __WEBPACK_IMPORTED_MODULE_2__createMemoryHistory__["a" /* default */](options);
-  var transitionManager = __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__["a" /* default */](history, __WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */](routes));
+  history = history ? history : Object(__WEBPACK_IMPORTED_MODULE_2__createMemoryHistory__["a" /* default */])(options);
+  var transitionManager = Object(__WEBPACK_IMPORTED_MODULE_3__createTransitionManager__["a" /* default */])(history, Object(__WEBPACK_IMPORTED_MODULE_4__RouteUtils__["b" /* createRoutes */])(routes));
 
   if (location) {
     // Allow match({ location: '/the/path', ... })
@@ -31403,7 +31394,7 @@ function match(_ref, callback) {
     var renderProps = void 0;
 
     if (nextState) {
-      var router = __WEBPACK_IMPORTED_MODULE_5__RouterUtils__["b" /* createRouterObject */](history, transitionManager, nextState);
+      var router = Object(__WEBPACK_IMPORTED_MODULE_5__RouterUtils__["b" /* createRouterObject */])(history, transitionManager, nextState);
       renderProps = _extends({}, nextState, {
         router: router,
         matchContext: { transitionManager: transitionManager, router: router }
@@ -31873,7 +31864,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
   if (process.env.NODE_ENV !== 'production') {
     middlewares.forEach(function (middleware, index) {
-      process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED_MODULE_2__routerWarning__["a" /* default */](middleware.renderRouterContext || middleware.renderRouteComponent, 'The middleware specified at index ' + index + ' does not appear to be ' + 'a valid React Router middleware.') : void 0;
+      process.env.NODE_ENV !== 'production' ? Object(__WEBPACK_IMPORTED_MODULE_2__routerWarning__["a" /* default */])(middleware.renderRouterContext || middleware.renderRouteComponent, 'The middleware specified at index ' + index + ' does not appear to be ' + 'a valid React Router middleware.') : void 0;
     });
   }
 
@@ -31913,7 +31904,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__createRouterHistory__ = __webpack_require__(146);
 
 
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1__createRouterHistory__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_history_lib_createBrowserHistory___default.a));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1__createRouterHistory__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_history_lib_createBrowserHistory___default.a));
 
 /***/ }),
 /* 316 */
@@ -32068,7 +32059,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__createRouterHistory__ = __webpack_require__(146);
 
 
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1__createRouterHistory__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_history_lib_createHashHistory___default.a));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1__createRouterHistory__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_history_lib_createHashHistory___default.a));
 
 /***/ }),
 /* 319 */

@@ -56,8 +56,6 @@ class EditAthlete extends React.Component {
   }
 
   render() {
-    console.log('state', this.state)
-    console.log('props', this.props)
     const aboutMe = this.props.SingleAthlete[0];
     if (!aboutMe) return null
     const athlete = aboutMe.Athlete

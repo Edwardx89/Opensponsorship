@@ -15,12 +15,9 @@ class SingleAthlete extends React.Component {
   }
 
   render() {
-    console.log('state', this.state)
-    console.log('props', this.props)
     const aboutMe = this.props.SingleAthlete[0];
     if (!aboutMe) return null
     const athlete = aboutMe.Athlete
-    console.log('athlete', athlete)
     return (
       <div>
         <h2>{athlete.firstName} {athlete.lastName} Profile</h2>

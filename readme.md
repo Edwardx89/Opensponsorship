@@ -1,4 +1,6 @@
 ## To start:
+A SPA platform to view athletes profile.
+
 1. Run `npm install`
 2. To seed sample data Run `node db/models/start.js`
 3. Run `npm start` to start server
